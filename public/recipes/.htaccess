@@ -1,0 +1,4 @@
+AddType text/plain .cook
+<FilesMatch "index\.json$">
+  Header set Cache-Control "max-age=300, must-revalidate"
+</FilesMatch>

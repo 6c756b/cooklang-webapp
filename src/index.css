@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --color-parchment: #f5f0eb;
+  --color-parchment-dark: #ede7df;
+  --color-ink: #1c1917;
+  --color-ink-muted: #78716c;
+  --color-accent: #c2410c;
+  --color-accent-light: #fff1ec;
+  --color-accent-border: #fed7aa;
+  --color-cookware: #1d4ed8;
+  --color-cookware-light: #eff6ff;
+  --color-cookware-border: #bfdbfe;
+  --color-timer: #15803d;
+  --color-timer-light: #f0fdf4;
+  --color-timer-border: #bbf7d0;
+
+  --font-sans: "system-ui", ui-sans-serif, sans-serif;
+  --font-serif: "Georgia", ui-serif, serif;
+
+  --radius-pill: 9999px;
+}
+
+html {
+  background-color: var(--color-parchment);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+/* Ingredient spans in step text */
+.ingredient-inline {
+  color: var(--color-accent);
+  font-weight: 600;
+  border-bottom: 1.5px solid var(--color-accent-border);
+}
+
+.cookware-inline {
+  color: var(--color-cookware);
+  font-style: italic;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.timer-inline {
+  color: var(--color-timer);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
