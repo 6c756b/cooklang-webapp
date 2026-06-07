@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2 — 2026-06-07
+
+### Fixed
+
+- **Subfolder hosting**: switched to `HashRouter` and `base: './'` so the app works when served from any subdirectory, not just the root (e.g. on Github Pages).
+- **Recipe fetch paths**: all fetch and image URLs now use `import.meta.env.BASE_URL` instead of absolute `/`-rooted paths.
+- **Umlaut filenames**: `generate-index.mjs` now automatically renames files and folders with German umlauts to ASCII equivalents (ä→ae, ö→oe, ü→ue, ß→ss) before writing `index.json`, preventing 404s on servers that don't handle Unicode filenames consistently.
+- **URL encoding**: recipe paths are now percent-encoded per segment via `encodeURIComponent` before fetching.
+
 ## 0.1.1 — 2026-06-07
 
 ### Fixed
