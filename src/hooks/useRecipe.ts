@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { parseRecipe, type ParsedRecipe } from '../lib/cooklang'
+import { parseRecipe, recipeUrl, type ParsedRecipe } from '../lib/cooklang'
 
 type State =
   | { status: 'loading' }
@@ -14,7 +14,7 @@ export function useRecipe(path: string | undefined, scale: number) {
     setState({ status: 'loading' })
     let cancelled = false
 
-    fetch(`/recipes/${path}`)
+    fetch(recipeUrl(path))
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.text()

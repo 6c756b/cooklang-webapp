@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useRecipes } from '../hooks/useRecipes'
+import { recipeUrl } from '../lib/cooklang'
 import type { RecipeEntry } from '../types/recipe'
 
 // currentPath = ["Home", "Pork"] means we're inside Zu Home/Pork
@@ -304,7 +305,7 @@ function RecipeCard({ recipe, activeTag, folderPath }: { recipe: RecipeEntry; ac
         style={{ minHeight: '60px' }}
       >
         {recipe.image ? (
-          <img src={`/recipes/${recipe.image}`} alt="" className="h-12 w-12 flex-none rounded-lg object-cover" loading="lazy" />
+          <img src={recipeUrl(recipe.image)} alt="" className="h-12 w-12 flex-none rounded-lg object-cover" loading="lazy" />
         ) : (
           <span
             className="flex h-12 w-12 flex-none items-center justify-center rounded-lg text-xl"

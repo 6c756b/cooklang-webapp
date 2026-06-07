@@ -5,6 +5,7 @@ import { useRecipe } from '../hooks/useRecipe'
 import { IngredientList } from './IngredientList'
 import { StepList } from './StepList'
 import { ScalingControl } from './ScalingControl'
+import { recipeUrl } from '../lib/cooklang'
 
 export function RecipeView() {
   const { '*': slug } = useParams()
@@ -73,7 +74,7 @@ export function RecipeView() {
         {entry?.image && (
           <div className="mt-4 overflow-hidden rounded-2xl">
             <img
-              src={`/recipes/${entry.image}`}
+              src={recipeUrl(entry.image)}
               alt={title}
               className="h-52 w-full object-cover"
             />

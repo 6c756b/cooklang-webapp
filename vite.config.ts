@@ -5,6 +5,7 @@ import wasm from 'vite-plugin-wasm'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: './',
   build: {
     target: 'esnext',
   },
@@ -22,7 +23,7 @@ export default defineConfig({
         theme_color: '#f5f0eb',
         background_color: '#f5f0eb',
         display: 'standalone',
-        start_url: '/',
+        start_url: './',
         icons: [
           { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
           { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },

@@ -1,12 +1,18 @@
 #!/usr/bin/env node
-// Scans public/recipes/ for .cook files and writes index.json.
-// Run: node scripts/generate-index.mjs
-import { readdirSync, statSync, writeFileSync, existsSync, readFileSync } from 'fs'
+// Scans recipes/ for .cook files and writes recipes/index.json.
+// Run: node generate-index.mjs  (from repo root, next to the recipes/ folder)
+// Or:  node scripts/generate-index.mjs  (from the app repo, scans public/recipes/)
+import { readdirSync, statSync, writeFileSync, existsSync, readFileSync, renameSync } from 'fs'
 import { join, extname, basename } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const recipesDir = join(__dirname, '..', 'public', 'recipes')
+// When placed in the app repo under scripts/, recipes live in ../public/recipes/
+// When placed in the recipes repo root, recipes live in ./recipes/
+const inAppRepo = __dirname.endsWith('scripts/')
+const recipesDir = inAppRepo
+  ? join(__dirname, '..', 'public', 'recipes')
+  : join(__dirname, 'recipes')
 const outputFile = join(recipesDir, 'index.json')
 
 const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.webp', '.avif']
@@ -46,6 +52,15 @@ function extractTitle(filePath, text) {
   return m ? m[1].trim() : null
 }
 
+function sanitizeName(name) {
+  return name
+    .normalize('NFC')
+    .replace(/ä/g, 'ae').replace(/Ä/g, 'Ae')
+    .replace(/ö/g, 'oe').replace(/Ö/g, 'Oe')
+    .replace(/ü/g, 'ue').replace(/Ü/g, 'Ue')
+    .replace(/ß/g, 'ss')
+}
+
 function slugify(relPath) {
   return relPath
     .replace(/\.cook$/, '')
@@ -57,8 +72,16 @@ function scan(dir, base = '') {
   const entries = readdirSync(dir)
   const results = []
 
-  for (const entry of entries) {
+  for (let entry of entries) {
     if (entry === 'index.json') continue
+
+    const sanitized = sanitizeName(entry)
+    if (sanitized !== entry) {
+      renameSync(join(dir, entry), join(dir, sanitized))
+      console.log(`  renamed: ${entry} → ${sanitized}`)
+      entry = sanitized
+    }
+
     const fullPath = join(dir, entry)
     const relPath = base ? `${base}/${entry}` : entry
     const stat = statSync(fullPath)

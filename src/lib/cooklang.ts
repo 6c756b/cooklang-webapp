@@ -1,4 +1,9 @@
 import { CooklangParser, getFlatIngredients, type FlatIngredient } from '@cooklang/cooklang'
+
+export function recipeUrl(path: string): string {
+  const encoded = path.normalize('NFC').split('/').map(encodeURIComponent).join('/')
+  return import.meta.env.BASE_URL + `recipes/${encoded}`
+}
 import type { Section, Content, Step, Item, Ingredient, Cookware, Timer } from '@cooklang/cooklang'
 
 export type { FlatIngredient, Section, Content, Step, Item, Ingredient, Cookware, Timer }
