@@ -11,6 +11,7 @@ export interface ParsedRecipe {
   description: string | undefined
   servings: string | undefined
   time: string | undefined
+  nutrition: string | undefined
   tags: string[]
   sections: Section[]
   ingredients: Ingredient[]
@@ -72,8 +73,7 @@ function extractFrontmatter(text: string): { meta: Record<string, unknown>; body
         .slice(1, -1)
         .split(',')
         .map((s) => s.trim())
-    } else if (rawVal.includes(',')) {
-      meta[key] = rawVal.split(',').map((s) => s.trim())
+        .filter(Boolean)
     } else {
       meta[key] = rawVal
     }
@@ -104,13 +104,18 @@ export function parseRecipe(raw: string, scale?: number): ParsedRecipe {
     tags = [...recipe.tags]
   } else if (Array.isArray(meta['tags'])) {
     tags = meta['tags'] as string[]
+  } else if (typeof meta['tags'] === 'string' && meta['tags']) {
+    tags = (meta['tags'] as string).split(',').map((t) => t.trim()).filter(Boolean)
   }
+
+  const nutrition = meta['nutrition'] as string | undefined
 
   return {
     title,
     description,
     servings,
     time,
+    nutrition,
     tags,
     sections: recipe.sections,
     ingredients: recipe.ingredients,

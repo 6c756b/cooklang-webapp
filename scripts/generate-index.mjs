@@ -29,7 +29,9 @@ function extractTags(filePath, text) {
   }
   const m = body.match(/^(?:>>)?\s*tags\s*:\s*(.+)$/im)
   if (!m) return []
-  return m[1].split(',').map((t) => t.trim()).filter(Boolean)
+  const raw = m[1].trim()
+  const inner = raw.startsWith('[') && raw.endsWith(']') ? raw.slice(1, -1) : raw
+  return inner.split(',').map((t) => t.trim()).filter(Boolean)
 }
 
 /** Extract >> title: or YAML title: from a .cook file. */

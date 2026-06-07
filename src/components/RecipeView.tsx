@@ -108,6 +108,17 @@ export function RecipeView() {
                   ))}
               </div>
 
+              {/* Nutrition */}
+              {recipe.nutrition && (
+                <div
+                  className="mt-3 rounded-xl px-4 py-2.5 text-sm"
+                  style={{ backgroundColor: 'var(--color-parchment-dark)', color: 'var(--color-ink-muted)' }}
+                >
+                  <span className="font-medium" style={{ color: 'var(--color-ink)' }}>Nährwerte: </span>
+                  {recipe.nutrition}
+                </div>
+              )}
+
               {/* Description / note */}
               {recipe.description && (
                 <p
@@ -164,7 +175,7 @@ export function RecipeView() {
 const KNOWN_KEYS = new Set([
   'title', 'description', 'servings', 'time', 'tags', 'author', 'source',
   'course', 'difficulty', 'cuisine', 'diet', 'locale', 'images',
-  'prep time', 'cook time',
+  'prep time', 'cook time', 'nutrition',
 ])
 
 function MetaBadge({ icon, label }: { icon: string; label: string }) {

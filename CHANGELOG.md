@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 — 2026-06-07
+
+### Fixed
+
+- **YAML `time` field**: Values containing a comma (e.g. `10 min prep, 20 min baking`) were incorrectly split into an array, dropping the space after the comma. Only values wrapped in `[...]` are now treated as arrays.
+- **Tags in `index.json`**: YAML tags in `[Mealprep]` format were written to the index with the surrounding brackets. `generate-index.mjs` now strips them correctly.
+- **Nutrition display**: The `nutrition` YAML frontmatter field is now parsed and displayed in the recipe view below the metadata badges.
+
 ## 0.1.0 — 2026-06-06
 
 Initial release.
